@@ -1,0 +1,225 @@
+<template>
+  <section id="mainContainer">
+    <Modal-admin v-if="showAdmin"/>
+    <div class="adminButton" @click="()=>showAdmin = !showAdmin">
+      <span class="material-icons-outlined">
+admin_panel_settings
+</span>
+    </div>
+    <header>
+      <img src="https://www.alternova.co/wp-content/uploads/2021/03/cropped-logo-Alternova.png" alt="alternova">
+    </header>
+    <main>
+      <section class="productsContainer">
+        <Store-cards v-for="product in store.products" :key="product.name" :product="product"/>
+      </section>
+      <section class="total" v-if="getShoppingCart.length>0" :class="{expand:!closeTotal}">
+        <Total />
+        <div class="expandButton" @click="closeTotal = !closeTotal">
+          <span class="material-icons-outlined">
+compare_arrows
+</span>
+        </div>
+      </section>
+    </main>
+  </section>
+</template>
+
+<script>
+import { mapState , mapGetters} from 'vuex'
+export default {
+  name: 'IndexPage',
+  data(){
+    return{
+      closeTotal:true,
+      showAdmin:false
+    }
+  },
+    computed: {
+    ...mapState({
+      store: state => state.store
+    }),
+        ...mapGetters([
+      'getShoppingCart'
+    ]),
+  }
+}
+</script>
+<style lang="scss">
+.adminButton{
+  position: fixed;
+  top: 60px;
+  left: 10px;
+  width: 4rem;
+  height: 4rem;
+  padding: 0.2rem;
+  border-radius: 50%;
+  border: solid 3px #2F4858;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  cursor: pointer;
+  z-index: 100;
+}
+#mainContainer{
+  height: 100vh;
+  .total{
+    flex: 1;
+    overflow: auto;
+    width: 100%;
+  }
+  .expandButton{
+    display: none;
+  }
+  main{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-height: 90vh;
+  }
+  header{
+    max-height: 9vh;
+    padding-top: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+              animation: enterTop 0.5s ease forwards alternate;
+    img{
+      max-width: 85%;
+      object-fit: cover;
+    }
+  }
+  .productsContainer{
+    max-height: 70vh;
+    overflow: auto;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    width: 96%;
+    margin: auto;
+        display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: center;
+    justify-items: center;
+    border-radius: 10px;
+    & > article{
+    animation: enterLeft 0.9s ease-in forwards alternate,enter 2.2s ease-in forwards alternate;
+    }
+    & > article:nth-child(odd){
+          animation: enterRight 0.9s ease-in forwards alternate,enterv2 2.2s ease-in forwards alternate;
+    }
+@keyframes enterLeft {
+    0% {
+      transform: translateX(100vw);
+
+    }
+    100% {
+      transform: translateX(0);
+    }
+    
+}
+@keyframes enterRight {
+    0% {
+      transform: translateX(-100vw);
+
+    }
+    100% {
+      transform: translateX(0);
+    }
+    
+}
+@keyframes enterTop {
+    0% {
+      transform: translateY(-100vw);
+
+    }
+    100% {
+      transform: translateY(0);
+    }
+    
+}
+@keyframes enter {
+    0% {
+      box-shadow: 0px 0px 0px 0px;
+
+    }
+    
+    99%{
+      box-shadow: 0px 0px 0px 0px;
+    }
+    100% {
+        box-shadow: inset 0px 0px 2px 0px #bb388d73 ,0px 0px 7px 0px #854b99b9 ;
+    }
+    
+}
+@keyframes enterv2 {
+    0% {
+            box-shadow: 0px 0px 0px 0px;
+
+    }
+    99%{
+                  box-shadow: 0px 0px 0px 0px;
+    }
+    100% {
+        box-shadow: inset 0px 0px 2px 0px #854b99b9  ,0px 0px 7px 0px #bb388d73 ;
+    }
+    
+}
+  }
+  @media screen and (min-width:1100px) {
+      .expandButton{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -30px;
+        margin: auto;
+    display: block;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 60px;
+    width: 30px;
+        box-shadow: -2px 0px 4px 0px rgba(0, 0, 0, 0.135);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  }
+  main{
+    padding-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: 96%;
+  margin: auto;
+  max-height: 96vh;
+  .productsContainer{
+    min-width: 60%;
+    margin: unset;
+    flex: 1;
+  }
+  .total{
+    overflow: inherit;
+                  transition-property: transform;
+            transition-duration: 0.5s;
+        transition-timing-function: linear;
+        transition-delay: 0s;
+          position: fixed;
+          right: 0;
+          top: 0;
+    width: 35vw;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    &.expand {
+      transform: translateX(100%);
+    }
+  }
+  }
+
+}
+}
+
+</style>

@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700;800&display=swap');
+
+html{
+    font-size: 62.5%;
+    font-family: 'Prompt', sans-serif;
+}
+*{
+    box-sizing: border-box;
+    margin: unset;
+}
+:root{
+    --color-claro:white;
+    --color-principal:#535290;
+    --color-secundario:white;
+    --color-variacion:#E51C6D;
+    --color-variacionTrasparente:#47cfad88;
+    --color-gris:#e6e9ed;
+    --color-grisOscuro:#22272d;
+}
+body{
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-principal);
+    padding: 10px;
+    border-radius: 4px;
+    color: var(--color-secundario);
+    cursor: pointer;
+    
+}
+button:hover{
+    filter: brightness(1.2);
+}

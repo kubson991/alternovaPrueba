@@ -1,0 +1,200 @@
+<template>
+  <article>
+    <section class="ExtraInfo" @click="()=>{showInfo = false}">
+        <div>Stock: {{product.stock}}</div>
+        <div>Cost: {{product.unit_price}}</div>
+    </section>
+    <div class="imageContainer" @click="()=>{showInfo = true}" :class="{showInfo:showInfo}">
+    <img src="https://www.thespruce.com/thmb/c3znkzZgMeuvzBy4wH13jVllfUo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/plants-with-big-flowers-4138211-hero-b10becb169064cc4b3c7967adc1b22e1.jpg" alt="">
+    </div>
+    <section class="addContainer">
+        <h2>{{product.name}}</h2>
+                    <input type="number" max="999" v-model="quantity" placeholder="Quantity">
+        <button @click="add">Add to cart</button>
+
+
+    </section>
+  </article>
+</template>
+
+<script>
+import { mapGetters , mapMutations } from 'vuex';
+export default {
+  name: 'cards',
+  props:['product'],
+  
+  data() {
+    return {
+        quantity:null,
+        showInfo:false
+      // Aquí puedes agregar los datos del componente
+    }
+  },
+  computed: {
+  },
+  methods: {
+        ...mapMutations({
+      removeFromShoppingCart: 'removeFromShoppingCart',
+      addShoppingCart:'addShoppingCart'
+    }),
+    add(){
+        this.removeFromShoppingCart(this.product)
+        if ( this.quantity !==null && this.product.stock >= this.quantity) {
+            this.addShoppingCart({...this.product,quantity:this.quantity})
+            this.quantity=null
+        }else{
+            this.$swal.fire({
+            type: 'error',
+            title: 'Oops :(',
+            text: 'the quantity you request is not available!',
+})
+            this.quantity=null
+this.quantity=null
+        }
+    }
+  },
+  mounted() {
+    // Aquí puedes agregar el código que se ejecuta cuando el componente se monta
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+
+
+@keyframes enterLeft {
+    0% {
+            box-shadow: 0 0 0 0 ;
+      transform: translateX(-200%);
+
+    }
+    100% {
+      transform: translateX(0);
+    }
+    
+}
+@keyframes invi {
+    0% {
+       visibility: hidden;
+
+    }
+    99%{
+        visibility: hidden
+    }
+    100% {
+      visibility: visible;
+    }
+    
+}
+@keyframes enterRight {
+    0% {
+
+      transform: translateX(200%);
+
+    }
+    100% {
+      transform: translateX(0);
+    }
+    
+}
+ article{
+    position: relative;
+    width: 100%;
+    height:120px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+    border-radius: 10px;
+    @media screen and (min-width:600px) {
+        flex-direction: column;
+        max-width: 300px;
+        height: 250px;
+    }
+    .ExtraInfo{
+        position: absolute;
+        left: 0;
+        height: 100%;
+        display: flex;
+        width: 60%;
+        z-index: 3;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+                    @media screen and (min-width:600px) {
+width: 100%;
+height: 70%;
+    }
+        div{
+            font-size: 2rem;
+        }
+        
+    }
+    .imageContainer{
+        width: 60%;
+        height: 100%;
+                  transition-property: transform;
+            transition-duration: 0.5s;
+        transition-timing-function: linear;
+        transition-delay: 0s;
+                &.showInfo{
+            transform: translateX(-200%);
+                        @media screen and (min-width:600px) {
+                    transform:translateY(-200%)
+    }
+        }
+            @media screen and (min-width:600px) {
+width: 100%;
+height: 62%;
+    }
+    }
+    img{
+        animation: enterLeft 1s ease-out 0.9s alternate,invi 1s linear 0s alternate,;
+        position: relative;
+        z-index: 4;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+    }
+    .addContainer{
+                            transform: translateX(200%);
+                animation: enterRight 0.9s ease-in forwards alternate;
+                animation-delay: 1s;
+        height: 100%;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+                    @media screen and (min-width:600px) {
+width: 100%;
+height: 70%;
+    }
+        h2{
+            text-align: center;
+        }
+
+        input{
+            height: 20px;
+            width: 40%;
+            border: unset;
+            text-align: center;
+              appearance: textfield;
+                -webkit-appearance: none;
+  margin: 0;
+  &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+  margin: 0;}
+        }
+        button{
+            height: 20px;
+            border: unset;
+        }
+        
+
+    }
+ }
+</style>
