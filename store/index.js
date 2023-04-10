@@ -36,9 +36,6 @@ export const mutations = {
     }
 }
 
-export const actions = {
-    // Aquí puedes agregar las acciones que realizarán operaciones asíncronas
-}
 
 export const getters = {
     getProducts(state) {

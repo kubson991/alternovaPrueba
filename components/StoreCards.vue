@@ -27,7 +27,6 @@ export default {
     return {
         quantity:null,
         showInfo:false
-      // Aquí puedes agregar los datos del componente
     }
   },
   computed: {
@@ -53,9 +52,6 @@ this.quantity=null
         }
     }
   },
-  mounted() {
-    // Aquí puedes agregar el código que se ejecuta cuando el componente se monta
-  }
 }
 </script>
 
