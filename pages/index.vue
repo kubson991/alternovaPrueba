@@ -80,7 +80,6 @@ export default {
     max-height: 90vh;
   }
   header{
-    max-height: 9vh;
     padding-top: 2rem;
     width: 100%;
     display: flex;
