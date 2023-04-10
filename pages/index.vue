@@ -94,14 +94,21 @@ export default {
     }
   }
   .productsContainer{
+
     max-height: 70vh;
     overflow: auto;
+        overflow-x: hidden;
+
     padding-top: 3rem;
     padding-bottom: 2rem;
     width: 96%;
     margin: auto;
         display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    @media screen and (min-width:1600px){
+          width: 98%;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
     gap: 1rem;
     align-items: center;
     justify-items: center;

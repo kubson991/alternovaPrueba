@@ -35,3 +35,18 @@ button{
 button:hover{
     filter: brightness(1.2);
 }
+
+::-webkit-scrollbar-track {
+    background: white;
+
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #E51C6D;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }

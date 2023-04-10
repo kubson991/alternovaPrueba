@@ -5,7 +5,8 @@
         <div>Cost: {{product.unit_price}}</div>
     </section>
     <div class="imageContainer" @click="()=>{showInfo = true}" :class="{showInfo:showInfo}">
-    <img src="https://www.thespruce.com/thmb/c3znkzZgMeuvzBy4wH13jVllfUo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/plants-with-big-flowers-4138211-hero-b10becb169064cc4b3c7967adc1b22e1.jpg" alt="">
+    <img v-if="!product.image" src="https://seranking.com/blog/wp-content/uploads/2021/01/404_01-min.jpg" alt="">
+    <img v-else :src="product.image" alt="">
     </div>
     <section class="addContainer">
         <h2>{{product.name}}</h2>
