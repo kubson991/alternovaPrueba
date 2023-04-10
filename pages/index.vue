@@ -67,7 +67,7 @@ export default {
   .total{
     flex: 1;
     overflow: auto;
-    overflow-x: hidden;
+    overflow-x: visible;
     width: 100%;
   }
   .expandButton{
@@ -209,7 +209,7 @@ export default {
   }
   .total{
     overflow: inherit;
-        overflow-x: hidden;
+    overflow-x: visible;
                   transition-property: transform;
             transition-duration: 0.5s;
         transition-timing-function: linear;
