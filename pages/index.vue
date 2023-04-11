@@ -1,9 +1,15 @@
 <template>
   <section id="mainContainer">
-    <Modal-admin v-if="showAdmin"/>
-    <div class="adminButton" @click="()=>showAdmin = !showAdmin">
+    <Modal-admin v-if="showAdmin" @close="()=>showAdmin=false"/>
+    <Historic v-if="showHistoric" @close="()=>showHistoric=false"/>
+    <div class="FixedButtons" @click="()=>showAdmin = !showAdmin">
       <span class="material-icons-outlined">
 admin_panel_settings
+</span>
+    </div>
+    <div class="FixedButtons Historic" @click="()=>showHistoric = !showHistoric">
+      <span class="material-icons-outlined">
+pending_actions
 </span>
     </div>
     <header>
@@ -32,7 +38,8 @@ export default {
   data(){
     return{
       closeTotal:true,
-      showAdmin:false
+      showAdmin:false,
+      showHistoric:false
     }
   },
     computed: {
@@ -46,7 +53,8 @@ export default {
 }
 </script>
 <style lang="scss">
-.adminButton{
+.FixedButtons{
+      animation: enterRight 2.5s ease-in-out forwards alternate;
   position: fixed;
   top: 60px;
   left: 10px;
@@ -61,14 +69,23 @@ export default {
   background-color: white;
   cursor: pointer;
   z-index: 100;
+  &.Historic{
+    top: 110px;
+  }
 }
 #mainContainer{
   height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   .total{
-    flex: 1;
+    position: relative;
+    z-index: 11;
+    flex: 0.5;
     overflow: auto;
     overflow-x: visible;
     width: 100%;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.584);
   }
   .expandButton{
     display: none;
@@ -77,36 +94,47 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-height: 90vh;
+    flex: 1;
+    width: 100% ;
+    max-height: calc(99.5vh - 55px);
+                  @media screen and (min-width:1200px) {
+    max-height: calc(99.5vh - 76px);
+              }
   }
   header{
     padding-top: 2rem;
+    padding-bottom: 1rem;
     width: 100%;
     display: flex;
     align-items: center;
     overflow: hidden;
     justify-content: center;
               animation: enterTop 0.5s ease forwards alternate;
+              height: fit-content;
+              min-height: 55px;
+              @media screen and (min-width:1200px) {
+                min-height: 75px;
+              }
     img{
+      filter: drop-shadow(0 0px 2px rgba(0, 0, 0, 0.7));
       max-width: 85%;
       object-fit: cover;
     }
   }
   .productsContainer{
-
-    max-height: 70vh;
+    transition: all 1s;
     overflow: auto;
         overflow-x: hidden;
-
-    padding-top: 3rem;
-    padding-bottom: 2rem;
-    width: 96%;
+      flex: 1;
+      padding:0.5rem 0;
+    width: 100%;
+    padding-right: 0.3rem;
     margin: auto;
         display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    @media screen and (min-width:1600px){
-          width: 98%;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    @media screen and (min-width:1200px){
+      grid-template-rows: repeat(auto-fit, minmax(240px, 260px));
+      row-gap: 2rem;
     }
     gap: 1rem;
     align-items: center;
@@ -198,10 +226,11 @@ export default {
   main{
     padding-top: 2rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 96%;
   margin: auto;
-  max-height: 96vh;
+  flex: 1;
   .productsContainer{
     min-width: 60%;
     margin: unset;

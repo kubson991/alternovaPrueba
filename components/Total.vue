@@ -1,7 +1,8 @@
 <template>
   <section id="total">
     <h1>Cart</h1>
-    <section class="shoppingCart" v-for="(product,index) in getShoppingCart " :key="index">
+    <div class="cartContainer">
+          <section class="shoppingCart" v-for="(product,index) in getShoppingCart " :key="index">
         <p>{{product.name}}</p>
         <p>{{product.quantity}}</p>
         <p>{{product.unit_price}}</p>
@@ -10,6 +11,8 @@
 close
 </span></button>
     </section>
+    </div>
+
     <section class="Total">
         <p>Total: {{total}}</p>
         <button @click="soldProducts">Create Order</button>
@@ -55,7 +58,7 @@ this.$swal.fire({
 }).then((result) => {
   if (result.value) {
     this.sold()
-    this.$swal.fire('Seras Redirigido a la plataforma de pagos', 'En cualquier caso el JSON se ha modificado como si se modificara en base de datos :D', 'success')
+    this.$swal.fire('Seras Redirigido a la plataforma de pagos', 'En cualquier caso el JSON se ha modificado como si se modificara en base de datos :D , asi que tu decides si recargar la pagina o modificar en el modulo admin el JSON resultante', 'success')
     window.open('https://splendid-yeot-fc8861.netlify.app')
   } else {
     this.$swal.fire('No seras Redirigido a la plataforma de pagos', 'asi que chiste :(', 'info')
@@ -91,7 +94,14 @@ this.$swal.fire({
     
 }
     #total{
-        animation: enterBottom 0.9s ease-in forwards alternate;
+      .cartContainer{
+        max-height: 13.5rem;
+        @media screen and (min-width:1200px) {
+          max-height: 95vh;
+        }
+        overflow: auto;
+      }
+        animation: enterBottom 0.3s ease-in-out forwards alternate;
         @media screen and (min-width:1100px) {
           animation: unset;
           height: 100%;

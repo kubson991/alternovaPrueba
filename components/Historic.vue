@@ -1,39 +1,43 @@
 <template>
   <div class="mask" @click.self="close">
     <div class="modal" @click.stop>
-        <h1>Admin</h1>
-        <p>Aqui puedes ver el JSON actual y modificarlo a tu gusto :D (No olvides que si deseas agregar una imagen ,setea la url con el campo "image").</p>
-        <textarea class="texarea" cols="30" rows="10" v-model="json"></textarea>
-        <button @click="submit">Submit</button>
+      <h1>Historial De compras</h1>
+      <p>Aqui puedes encontrar las compras realizadas mediante su ID, al clickear alguno, se copiara a tu portapapeles el JSON solicitado por la prueba :3.</p>
+      <div v-for="buys in getHistoric" :key="buys.id">
+        <button @click="copySomething(buys)">{{buys.id}} | ${{buys.cost}} </button>
+      </div>
+      <h2 v-if="getHistoric.length===0">Ups,Parece que no se han realizado compras...</h2>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters} from 'vuex'
 export default {
-  name: 'Admin',
+  name: 'Historic',
   data() {
     return {
       json:''
     }
   },
   mounted(){
-    try {
-        this.json=JSON.stringify(this.$store.state.store)
-    } catch (error) {
-        this.json=''
-    }
-
+  },
+  computed:{
+            ...mapGetters([
+      'getHistoric'
+    ]),
   },
   methods: {
-            ...mapMutations({
-      setStore: 'setStore',
-    }),
-     submit(){
-        this.setStore(JSON.parse(this.json))
-        this.close()
-     },
+            async copySomething(buys) {
+              console.log(buys)
+              const text=JSON.stringify(buys)
+            try {
+                await this.$copyText(text);
+                alert('El JSON se ha copiado a tu portapapeles')
+            } catch (e) {
+                console.error(e);
+            }
+        },
      close(){
         this.$emit('close')
      }
@@ -51,6 +55,11 @@ export default {
     background-color: rgba(0, 0, 0, 0.192);
     z-index: 10;
     .modal{
+      h2{
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+      }
         position: absolute;
         top: 0;
         left: 0;
@@ -79,15 +88,6 @@ export default {
             font-size: 2rem;
         }
         
-        button{
-            border: unset;
-        }
-        .texarea{
-            width: 95%;
-            resize: none;
-            border-radius: 5px;
-            border: 1px solid #2F4858;
-        }
     }
 }
 </style>>

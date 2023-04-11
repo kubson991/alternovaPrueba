@@ -8,11 +8,17 @@ export const state = () => ({
                 { "name": "meat / pound", "unit_price": 500, "stock": 8 }
             ]
     },
+    historicShopping: [],
     shoppingCart: []
 })
 
 export const mutations = {
     sold(state) {
+        let cost = 0
+        state.shoppingCart.forEach(product => {
+            cost += product.quantity * product.unit_price
+        });
+        state.historicShopping.push({ productsSold: [...state.shoppingCart], cost ,id:new Date().getTime()})
         state.store.products.forEach(product => {
             const index = state.shoppingCart.findIndex(productSold => {
                 return productSold.name === product.name
@@ -43,5 +49,8 @@ export const getters = {
     },
     getShoppingCart(state) {
         return state.shoppingCart
+    },
+    getHistoric(state) {
+        return state.historicShopping
     }
 }

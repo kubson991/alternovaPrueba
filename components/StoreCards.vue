@@ -10,8 +10,8 @@
     </div>
     <section class="addContainer">
         <h2>{{product.name}}</h2>
-                    <input type="number" max="999" v-model="quantity" placeholder="Quantity">
-        <button @click="add">Add to cart</button>
+                    <input type="text" max="999" @input="inputChange" placeholder="Quantity">
+        <button @click="add" :disabled="!quantity || quantity===0">Add to cart</button>
 
 
     </section>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapGetters , mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 export default {
   name: 'cards',
   props:['product'],
@@ -37,6 +37,21 @@ export default {
       removeFromShoppingCart: 'removeFromShoppingCart',
       addShoppingCart:'addShoppingCart'
     }),
+    inputChange(e){
+       const value= e.target.value
+       console.log(value)
+       if (/^[0-9]+$/.test(value)) {
+            this.quantity= parseInt(value)
+       }else{
+        if (e.target.value !=='') {
+            const result=parseInt(value+''.slice(0, -1)) 
+            e.target.value=result
+            this.quantity= result
+        }else{
+            this.quantity= ''
+        }
+       }
+    },
     add(){
         this.removeFromShoppingCart(this.product)
         if ( this.quantity !==null && this.product.stock >= this.quantity) {
@@ -97,7 +112,7 @@ this.quantity=null
 }
  article{
     position: relative;
-    width: 100%;
+    width: 92%;
     height:120px;
     display: flex;
     align-items: center;
@@ -129,7 +144,7 @@ height: 70%;
         
     }
     .imageContainer{
-        width: 60%;
+        width: 45%;
         height: 100%;
                   transition-property: transform;
             transition-duration: 0.5s;
@@ -182,15 +197,23 @@ height: 70%;
               appearance: textfield;
                 -webkit-appearance: none;
   margin: 0;
+  border-bottom: 1px solid black;
+  outline: unset;
   &::-webkit-inner-spin-button {
       -webkit-appearance: none;
   margin: 0;}
         }
         button{
-            height: 20px;
+            height: 25px;
             border: unset;
         }
-        
+        button:disabled {
+            cursor: not-allowed;
+            filter:opacity(0.85);
+           &:hover{
+            filter:opacity(0.85);
+           }
+}
 
     }
  }

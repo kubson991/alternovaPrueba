@@ -45,6 +45,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    'nuxt-clipboard',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'nuxt-sweetalert2'
