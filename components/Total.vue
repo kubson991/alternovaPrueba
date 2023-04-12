@@ -66,9 +66,6 @@ this.$swal.fire({
 })
     }
   },
-  mounted() {
-    // Aquí puedes agregar el código que se ejecuta cuando el componente se monta
-  }
 }
 </script>
 

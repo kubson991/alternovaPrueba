@@ -17,7 +17,7 @@ pending_actions
     </header>
     <main>
       <section class="productsContainer">
-        <Store-cards v-for="product in store.products" :key="product.name" :product="product"/>
+        <Store-cards v-for="product in getProducts.products" :key="product.name" :product="product"/>
       </section>
       <section class="total" v-if="getShoppingCart.length>0" :class="{expand:!closeTotal}">
         <Total />
@@ -32,7 +32,7 @@ compare_arrows
 </template>
 
 <script>
-import { mapState , mapGetters} from 'vuex'
+import { mapGetters} from 'vuex'
 export default {
   name: 'IndexPage',
   data(){
@@ -43,11 +43,9 @@ export default {
     }
   },
     computed: {
-    ...mapState({
-      store: state => state.store
-    }),
         ...mapGetters([
-      'getShoppingCart'
+      'getShoppingCart',
+      'getProducts'
     ]),
   }
 }
@@ -113,7 +111,7 @@ export default {
               height: fit-content;
               min-height: 55px;
               @media screen and (min-width:1200px) {
-                min-height: 75px;
+                min-height: 80px;
               }
     img{
       filter: drop-shadow(0 0px 2px rgba(0, 0, 0, 0.7));

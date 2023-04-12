@@ -10,10 +10,8 @@
     </div>
     <section class="addContainer">
         <h2>{{product.name}}</h2>
-                    <input type="text" max="999" @input="inputChange" placeholder="Quantity">
+                    <input type="text" max="999" @input="inputChange" placeholder="Quantity" ref="quantity">
         <button @click="add" :disabled="!quantity || quantity===0">Add to cart</button>
-
-
     </section>
   </article>
 </template>
@@ -29,8 +27,6 @@ export default {
         quantity:null,
         showInfo:false
     }
-  },
-  computed: {
   },
   methods: {
         ...mapMutations({
@@ -62,10 +58,10 @@ export default {
             type: 'error',
             title: 'Oops :(',
             text: 'the quantity you request is not available!',
-})
-            this.quantity=null
-this.quantity=null
+})       
         }
+         this.$refs.quantity.value=''
+         this.quantity=null
     }
   },
 }
@@ -134,9 +130,9 @@ this.quantity=null
         align-items: center;
         flex-direction: column;
         justify-content: space-around;
-                    @media screen and (min-width:600px) {
-width: 100%;
-height: 70%;
+        @media screen and (min-width:600px) {
+            width: 100%;
+            height: 70%;
     }
         div{
             font-size: 2rem;
@@ -146,8 +142,8 @@ height: 70%;
     .imageContainer{
         width: 45%;
         height: 100%;
-                  transition-property: transform;
-            transition-duration: 0.5s;
+        transition-property: transform;
+        transition-duration: 0.5s;
         transition-timing-function: linear;
         transition-delay: 0s;
                 &.showInfo{
@@ -157,8 +153,8 @@ height: 70%;
     }
         }
             @media screen and (min-width:600px) {
-width: 100%;
-height: 62%;
+        width: 100%;
+        height: 62%;
     }
     }
     img{
@@ -171,9 +167,9 @@ height: 62%;
 
     }
     .addContainer{
-                            transform: translateX(200%);
-                animation: enterRight 0.9s ease-in forwards alternate;
-                animation-delay: 1s;
+        transform: translateX(200%);
+        animation: enterRight 0.9s ease-in forwards alternate;
+        animation-delay: 1s;
         height: 100%;
         flex: 1;
         display: flex;
@@ -181,9 +177,9 @@ height: 62%;
         justify-content: center;
         flex-direction: column;
         justify-content: space-evenly;
-                    @media screen and (min-width:600px) {
-width: 100%;
-height: 70%;
+        @media screen and (min-width:600px) {
+        width: 100%;
+        height: 70%;
     }
         h2{
             text-align: center;
